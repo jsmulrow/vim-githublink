@@ -1,22 +1,31 @@
-" A plugin to create a link to the mongodb/mongo github page corresponding to
-" the current file with the selected lines highlighted.
+" A plugin to create a link to the github page corresponding to the current
+" file, with the selected lines highlighted.
 "
-" Title: Mongo GitHub Link
+" Title: GitHub Link
 " Author: Jack Mulrow
 
 "
 "" Exposed functions.
 "
 
-let g:GitHubLinkRepo = "mongodb/mongo"
+let g:githublink#repo = "mongodb/mongo"
+let g:githublink#copyToClipboard = 1
 
 " Globally set the github repo.
 " Defaults to mongodb/mongo
-function! SetGithubRepo(repo)
-  let g:GitHubLinkRepo = a:repo
+function! githublink#SetGithubRepo(repo)
+  let g:githublink#repo = a:repo
 endfunction
 
-function! CreateAndCopyGithubLink()
+function! githublink#ToggleCopyToClipboard()
+  if g:githublink#copyToClipboard
+    let g:githublink#copyToClipboard = 0
+  else
+    let g:githublink#copyToClipboard = 1
+  endif
+endfunction
+
+function! githublink#GetLink()
   let l:link = s:BuildFileLink()
 
   " Get the line and add it to the link.
@@ -24,23 +33,27 @@ function! CreateAndCopyGithubLink()
   let l:link = l:link . '#L' . l:line
 
   " Copy to clipboard.
-  call s:CopyLinkToClipboard(l:link)
+  if g:githublink#copyToClipboard
+    call s:CopyLinkToClipboard(l:link)
+  endif
 
   " Print as well.
   echom l:link
 endfunction
 
-function! CreateAndCopyGithubLinkNoLine()
+function! githublink#GetLinkNoLine()
   let l:link = s:BuildFileLink()
 
   " Copy to clipboard.
-  call s:CopyLinkToClipboard(l:link)
+  if g:githublink#copyToClipboard
+    call s:CopyLinkToClipboard(l:link)
+  endif
 
   " Print as well.
   echom l:link
 endfunction
 
-function! CreateAndCopyGithubLinkVisual() range
+function! githublink#GetLinkVisual() range
   let l:link = s:BuildFileLink()
 
   if a:firstline == a:lastline
@@ -50,7 +63,9 @@ function! CreateAndCopyGithubLinkVisual() range
   endif
 
   " Copy to clipboard.
-  call s:CopyLinkToClipboard(l:link)
+  if g:githublink#copyToClipboard
+    call s:CopyLinkToClipboard(l:link)
+  endif
 
   " Print as well.
   echom l:link
@@ -61,7 +76,7 @@ endfunction
 "
 
 function! s:BuildFileLink()
-  let l:base = join(['https://github.com/', g:GitHubLinkRepo, '/blob/'], '')
+  let l:base = join(['https://github.com/', g:githublink#repo, '/blob/'], '')
   let l:hash = s:GetCurrentGitHash()
   let l:path = s:GetRelativePath()
 
@@ -84,5 +99,5 @@ function! s:CopyLinkToClipboard(link)
   let @+ = a:link
 endfunction
 
-nnoremap <localleader>gl :call CreateAndCopyGithubLink()<CR>
-vnoremap <localleader>gl :call CreateAndCopyGithubLinkVisual()<CR>
+nnoremap <localleader>gl :call githublink#GetLink()<CR>
+vnoremap <localleader>gl :call githublink#GetLinkVisual()<CR>
