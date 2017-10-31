@@ -1,7 +1,7 @@
 " A plugin to create a link to the mongodb/mongo github page corresponding to
 " the current file with the selected lines highlighted.
 "
-" Title: Mongo Github Link
+" Title: Mongo GitHub Link
 " Author: Jack Mulrow
 
 "
@@ -17,31 +17,31 @@ function! SetGithubRepo(repo)
 endfunction
 
 function! CreateAndCopyGithubLink()
-  let l:link = BuildFileLink()
+  let l:link = s:BuildFileLink()
 
   " Get the line and add it to the link.
   let l:line = line('.')
   let l:link = l:link . '#L' . l:line
 
   " Copy to clipboard.
-  call CopyLinkToClipboard(l:link)
+  call s:CopyLinkToClipboard(l:link)
 
   " Print as well.
   echom l:link
 endfunction
 
 function! CreateAndCopyGithubLinkNoLine()
-  let l:link = BuildFileLink()
+  let l:link = s:BuildFileLink()
 
   " Copy to clipboard.
-  call CopyLinkToClipboard(l:link)
+  call s:CopyLinkToClipboard(l:link)
 
   " Print as well.
   echom l:link
 endfunction
 
 function! CreateAndCopyGithubLinkVisual() range
-  let l:link = BuildFileLink()
+  let l:link = s:BuildFileLink()
 
   if a:firstline == a:lastline
     let l:link = l:link . '#L' . a:firstline
@@ -50,7 +50,7 @@ function! CreateAndCopyGithubLinkVisual() range
   endif
 
   " Copy to clipboard.
-  call CopyLinkToClipboard(l:link)
+  call s:CopyLinkToClipboard(l:link)
 
   " Print as well.
   echom l:link
@@ -60,25 +60,25 @@ endfunction
 "" Helper functions.
 "
 
-function! BuildFileLink()
+function! s:BuildFileLink()
   let l:base = join(['https://github.com/', g:GitHubLinkRepo, '/blob/'], '')
-  let l:hash = GetCurrentGitHash()
-  let l:path = GetRelativePath()
+  let l:hash = s:GetCurrentGitHash()
+  let l:path = s:GetRelativePath()
 
   return join([l:base, l:hash, '/', l:path], '')
 endfunction
 
-function! GetRelativePath()
+function! s:GetRelativePath()
   " Returns the path to the current file, from the current working directory.
   return expand('%')
 endfunction
 
-function! GetCurrentGitHash()
+function! s:GetCurrentGitHash()
   " Returns the full hash. --short would get the short one.
   return substitute(system('git rev-parse --verify HEAD'), "\n", '\1', '')
 endfunction
 
-function! CopyLinkToClipboard(link)
+function! s:CopyLinkToClipboard(link)
   " Save to the * and + registers.
   let @* = a:link
   let @+ = a:link
