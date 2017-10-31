@@ -8,22 +8,13 @@
 "" Exposed functions.
 "
 
-let g:githublink#repo = "mongodb/mongo"
-let g:githublink#copyToClipboard = 1
+if !exists("g:githublink#repo")
+  let g:githublink#repo = "mongodb/mongo"
+endif
 
-" Globally set the github repo.
-" Defaults to mongodb/mongo
-function! githublink#SetGithubRepo(repo)
-  let g:githublink#repo = a:repo
-endfunction
-
-function! githublink#ToggleCopyToClipboard()
-  if g:githublink#copyToClipboard
-    let g:githublink#copyToClipboard = 0
-  else
-    let g:githublink#copyToClipboard = 1
-  endif
-endfunction
+if !exists("g:githublink#copyToClipboard")
+  let g:githublink#copyToClipboard = 1
+endif
 
 function! githublink#GetLink()
   let l:link = s:BuildFileLink()
