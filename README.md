@@ -59,5 +59,5 @@ To unset this override, call `g:githublink#UnsetGithubRepo()` (or set
 `g:githublink#setMapping` determines if the default mappings are set when the
 plugin is loaded. Defaults to 1. Set to 0 to disable.
 
-	let g:githublink#copyToClipboard = 0
-	let g:githublink#copyToClipboard = 1
+	let g:githublink#setMapping = 0
+	let g:githublink#setMapping = 1
