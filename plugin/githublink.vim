@@ -110,5 +110,5 @@ function! s:GetGithubRepo()
   return l:repo
 endfunction
 
-nnoremap <localleader>gl :call githublink#GetLink()<CR>
-vnoremap <localleader>gl :call githublink#GetLinkVisual()<CR>
+nnoremap <leader>gl :call githublink#GetLink()<CR>
+vnoremap <leader>gl :call githublink#GetLinkVisual()<CR>

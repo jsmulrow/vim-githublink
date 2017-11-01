@@ -23,8 +23,8 @@ Usage
 
 By default, this plugin sets up two new mappings:
 
-	nnoremap <localleader>gl
-	vnoremap <localleader>gl
+	nnoremap <leader>gl
+	vnoremap <leader>gl
 
 Using the mapping in normal mode will generate a link to the current line, and
 using it in visual mode will link to the selected range of lines.
