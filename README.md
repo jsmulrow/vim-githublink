@@ -23,33 +23,41 @@ Usage
 
 By default, this plugin sets up two new mappings:
 
-	nnoremap <leader>gl
-	vnoremap <leader>gl
+	nnoremap <leader>gl :call githublink#GetLink()<CR>
+	vnoremap <leader>gl :call githublink#GetLinkVisual()<CR>
 
 Using the mapping in normal mode will generate a link to the current line, and
-using it in visual mode will link to the selected range of lines.
+using it in visual mode will link to the selected range of lines. To not set
+these mappings by default, see the option `g:githublink#setMapping` below.
 
 If you just want a link to the file, manually call `githublink#GetLinkNoLine()`.
 
 Options
 ------------
 
-There are two configurable options:
+There are three configurable options:
 
-	g:githublink#repo
 	g:githublink#copyToClipboard
+	g:githublink#repo
+	g:githublink#setMapping
+
+`g:githublink#copyToClipboard` determines if the link is copied to your
+clipboard after being displayed. Defaults to 1. Set to 0 to disable.
+
+	let g:githublink#copyToClipboard = 0
+	let g:githublink#copyToClipboard = 1
 
 The github repo is automatically detected (by using `git remote get-url origin`
 and manipulating the result), but you can override this by setting
-`githublink#repo` to whatever string you want to use in the link instead.
-To unset this override, call `githublink#UnsetGithubRepo()` (or set
+`g:githublink#repo` to whatever string you want to use in the link instead.
+To unset this override, call `g:githublink#UnsetGithubRepo()` (or set
 `g:githublink#repo` to an empty string).
 
 	let g:githublink#repo = 'new/repo'
 	call githublink#UnsetGithubRepo()
 
-`githublink#copyToClipboard` determines if the link is copied to your clipboard
-after being displayed. Defaults to 1. Set to 0 to disable.
+`g:githublink#setMapping` determines if the default mappings are set when the
+plugin is loaded. Defaults to 1. Set to 0 to disable.
 
 	let g:githublink#copyToClipboard = 0
 	let g:githublink#copyToClipboard = 1

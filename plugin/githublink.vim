@@ -8,6 +8,10 @@
 "" Exposed functions.
 "
 
+if !exists("g:githublink#setMapping")
+    let g:githublink#setMapping = 1
+endif
+
 if !exists("g:githublink#repo")
   let g:githublink#repo = ""
 endif
@@ -110,5 +114,7 @@ function! s:GetGithubRepo()
   return l:repo
 endfunction
 
-nnoremap <leader>gl :call githublink#GetLink()<CR>
-vnoremap <leader>gl :call githublink#GetLinkVisual()<CR>
+if g:githublink#setMapping
+  nnoremap <leader>gl :call githublink#GetLink()<CR>
+  vnoremap <leader>gl :call githublink#GetLinkVisual()<CR>
+endif
