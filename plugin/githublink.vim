@@ -94,8 +94,8 @@ function! s:GetRelativePath()
 endfunction
 
 function! s:GetCurrentGitHash()
-  " Returns the full hash. --short would get the short one.
-  return substitute(system('git rev-parse --verify HEAD'), "\n", '\1', '')
+  " Returns the full hash.
+  return substitute(system('git rev-parse --verify --short HEAD'), "\n", '\1', '')
 endfunction
 
 function! s:CopyLinkToClipboard(link)
